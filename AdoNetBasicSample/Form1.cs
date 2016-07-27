@@ -18,7 +18,7 @@ namespace AdoNetBasicSample
             InitializeComponent();
         }
 
-        private string BaglantiCumlesi = "Server=TRAINER; Database=WissenSC305Db1; User Id=sa; Password=wissen;";
+        private string BaglantiCumlesi = "Server=[ServerName]; Database=[DatabaseName]; User Id=[sql_username]; Password=[sql_password];";
 
         private void btnVerileriGetir_Click(object sender, EventArgs e)
         {
