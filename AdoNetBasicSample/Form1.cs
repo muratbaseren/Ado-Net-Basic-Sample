@@ -13,7 +13,7 @@ namespace AdoNetBasicSample
 {
     public partial class Form1 : Form
     {
-        // Test 2
+        // Test 3
         public Form1()
         {
             InitializeComponent();
