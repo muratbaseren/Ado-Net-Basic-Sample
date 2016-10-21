@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace AdoNetBasicSample
 {
+    /// <summary>
+    /// This is super ado helper class.
+    /// </summary>
     public partial class SuperAdoHelper
     {
         public string ConnectionString { get; private set; }
@@ -24,6 +27,15 @@ namespace AdoNetBasicSample
             }
         }
 
+        /// <summary>
+        /// This is a super method. It creates all Insert, Update, Delete, Select command and run query. Return required result value.
+        /// </summary>
+        /// <param name="queryType">Query type.</param>
+        /// <param name="tableName">Table Name</param>
+        /// <param name="columns">Column names.</param>
+        /// <param name="parameters">Query values of parameters. For example; insert parameters or update parameters</param>
+        /// <param name="whereParameters">Where condition values of parameters. You should use KeyValuePair, key is column name(don't use @ character)</param>
+        /// <returns></returns>
         public object CreateAndRunQuery(QueryType queryType, string tableName, string[] columns, object[] parameters, params KeyValuePair<string, object>[] whereParameters)
         {
             SqlConnection baglanti = new SqlConnection(ConnectionString);
