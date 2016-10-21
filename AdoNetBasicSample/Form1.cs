@@ -13,16 +13,27 @@ namespace AdoNetBasicSample
 {
     public partial class Form1 : Form
     {
+        private string BaglantiCumlesi = 
+            "Server=TRAINER; Database=mydatabase; User Id=sa; Password=******;";
+
+        private SuperAdoHelper SuperHelper = null;
+
+
         public Form1()
         {
             InitializeComponent();
-        }
 
-        private string BaglantiCumlesi = "Server=TRAINER; Database=WissenSC305Db1; User Id=sa; Password=wissen;";
+            SuperHelper = new SuperAdoHelper(BaglantiCumlesi);
+        }
 
         private void btnVerileriGetir_Click(object sender, EventArgs e)
         {
             lstKisiler.Items.Clear();
+
+            #region Using CreateAndRunQuery
+            //CreateAndRunQuery(QueryType.Select, "Kisiler", 
+            //    new string[] { "Id", "Ad", "Soyad", "TcNo", "Telefon", "EPosta", "DogumTarihi", "Adres" }, null, null); 
+            #endregion
 
             SqlConnection baglanti = new SqlConnection(BaglantiCumlesi);
 
@@ -52,10 +63,19 @@ namespace AdoNetBasicSample
             }
 
             baglanti.Close();
+
+
         }
 
         private void btnEkle_Click(object sender, EventArgs e)
         {
+            #region Using CreateAndRunQuery
+            //CreateAndRunQuery(QueryType.Insert, "Kisiler",
+            //    new string[] { "Ad", "Soyad", "TcNo", "Telefon", "EPosta", "DogumTarihi", "Adres" },
+            //    new object[] { txtAd.Text, txtSoyad.Text, txtTcNo.Text, txtTelefon.Text, txtEposta.Text, dtpDogumTarihi.Value, txtAdres.Text },
+            //    null); 
+            #endregion
+
             SqlConnection baglanti = new SqlConnection(BaglantiCumlesi);
 
             SqlCommand komut = new SqlCommand();
@@ -80,6 +100,18 @@ namespace AdoNetBasicSample
 
         private void btnGuncelle_Click(object sender, EventArgs e)
         {
+            if (lstKisiler.SelectedItem == null)
+                return;
+
+            Kisi seciliKisi = lstKisiler.SelectedItem as Kisi;
+
+            #region Using CreateAndRunQuery
+            //CreateAndRunQuery(QueryType.Update, "Kisiler",
+            //    new string[] { "Ad", "Soyad", "TcNo", "Telefon", "EPosta", "DogumTarihi", "Adres" },
+            //    new object[] { txtAd.Text, txtSoyad.Text, txtTcNo.Text, txtTelefon.Text, txtEposta.Text, dtpDogumTarihi.Value, txtAdres.Text },
+            //    new KeyValuePair<string, object>("Id", seciliKisi.Id)); 
+            #endregion
+
             SqlConnection baglanti = new SqlConnection(BaglantiCumlesi);
 
             SqlCommand komut = new SqlCommand();
@@ -95,7 +127,6 @@ namespace AdoNetBasicSample
             komut.Parameters.AddWithValue("@DogumTarihi", dtpDogumTarihi.Value);
             komut.Parameters.AddWithValue("@Adres", txtAdres.Text);
 
-            Kisi seciliKisi = lstKisiler.SelectedItem as Kisi;
             komut.Parameters.AddWithValue("@Id", seciliKisi.Id);
 
             baglanti.Open();
@@ -107,6 +138,16 @@ namespace AdoNetBasicSample
 
         private void btnSil_Click(object sender, EventArgs e)
         {
+            if (lstKisiler.SelectedItem == null)
+                return;
+
+            Kisi seciliKisi = lstKisiler.SelectedItem as Kisi;
+
+            #region Using CreateAndRunQuery
+            //CreateAndRunQuery(QueryType.Delete, "Kisiler", 
+            //    null, null, new KeyValuePair<string, object>("Id", seciliKisi.Id)); 
+            #endregion
+
             SqlConnection baglanti = new SqlConnection(BaglantiCumlesi);
 
             SqlCommand komut = new SqlCommand();
@@ -114,14 +155,15 @@ namespace AdoNetBasicSample
             komut.CommandText = "DELETE FROM Kisiler WHERE Id=@Id";
 
             // Parametre varsa parametre eklenir.
-            Kisi seciliKisi = lstKisiler.SelectedItem as Kisi;
             komut.Parameters.AddWithValue("@Id", seciliKisi.Id);
-            
+
             baglanti.Open();
 
             komut.ExecuteNonQuery();    // Sorgu çalıştırılır.
 
             baglanti.Close();
+
+
         }
     }
 }
