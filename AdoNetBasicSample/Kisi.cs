@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdoNetBasicSample
 {
-    // Test 4
+    // Test 5
     // Veritabanındaki kişiler tablosundaki satırları temsil eden nesne
     public class Kisi
     {
